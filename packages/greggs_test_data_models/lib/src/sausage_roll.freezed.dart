@@ -224,7 +224,7 @@ class __$$_SausageRollCopyWithImpl<$Res> extends _$SausageRollCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SausageRoll implements _SausageRoll {
+class _$_SausageRoll extends _SausageRoll {
   _$_SausageRoll(
       {required this.articleCode,
       required this.shopCode,
@@ -237,7 +237,8 @@ class _$_SausageRoll implements _SausageRoll {
       required this.customerDescription,
       required this.imageUri,
       required this.thumbnailUri})
-      : _dayParts = dayParts;
+      : _dayParts = dayParts,
+        super._();
 
   factory _$_SausageRoll.fromJson(Map<String, dynamic> json) =>
       _$$_SausageRollFromJson(json);
@@ -330,7 +331,7 @@ class _$_SausageRoll implements _SausageRoll {
   }
 }
 
-abstract class _SausageRoll implements SausageRoll {
+abstract class _SausageRoll extends SausageRoll {
   factory _SausageRoll(
       {required final String articleCode,
       required final String shopCode,
@@ -343,6 +344,7 @@ abstract class _SausageRoll implements SausageRoll {
       required final String customerDescription,
       required final String imageUri,
       required final String thumbnailUri}) = _$_SausageRoll;
+  _SausageRoll._() : super._();
 
   factory _SausageRoll.fromJson(Map<String, dynamic> json) =
       _$_SausageRoll.fromJson;

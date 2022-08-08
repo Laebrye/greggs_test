@@ -1,4 +1,4 @@
-import 'package:greggs_test_data/greggs_test_data.dart';
+import 'package:greggs_test_data_models/greggs_test_data_models.dart';
 import 'package:test/test.dart';
 
 void main() {
