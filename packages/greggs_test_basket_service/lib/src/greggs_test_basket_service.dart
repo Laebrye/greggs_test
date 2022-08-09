@@ -3,8 +3,8 @@ import 'package:rxdart/rxdart.dart';
 import 'package:greggs_test_data_models/greggs_test_data_models.dart';
 
 abstract class GreggsTestBaseBasketService {
-  addToBasket(GreggsTestProduct product);
-  removeFromBasket(GreggsTestProduct product);
+  Future<void> addToBasket(GreggsTestProduct product);
+  Future<void> removeFromBasket(GreggsTestProduct product);
   Stream<Basket> getBasketStream();
   dispose();
 }

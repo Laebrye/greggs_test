@@ -26,13 +26,13 @@ class Basket with _$Basket {
     } else {
       updatedContents[code] = updatedContents[code]! - 1;
     }
-    return this.copyWith(contents: updatedContents);
+    return copyWith(contents: updatedContents);
   }
 
   Basket withItemAdded(GreggsTestProduct product) {
     final code = product.getArticleCode();
     Map<String, int> updatedContents = Map<String, int>.from(contents);
     updatedContents[code] = (updatedContents[code] ?? 0) + 1;
-    return this.copyWith(contents: updatedContents);
+    return copyWith(contents: updatedContents);
   }
 }

@@ -28,4 +28,13 @@ class SausageRoll with _$SausageRoll implements GreggsTestProduct {
 
   @override
   String getArticleCode() => articleCode;
+
+  @override
+  String getInternalDescription() => internalDescription;
+
+  @override
+  String getImageUri() => imageUri;
+
+  @override
+  String getThumbnailUri() => thumbnailUri;
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_it/get_it.dart';
 
-import 'sample_feature/sample_item_details_view.dart';
-import 'sample_feature/sample_item_list_view.dart';
+import 'sausage_roll_shop.dart/counter_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -57,9 +57,22 @@ class MyApp extends StatelessWidget {
           // preferred ThemeMode (light, dark, or system default) from the
           // SettingsController to display the correct theme.
           theme: ThemeData(
-              colorScheme:
-                  ColorScheme.fromSeed(seedColor: const Color(0xff00558F))),
-          darkTheme: ThemeData.dark(),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xff00558F),
+            ).copyWith(
+              secondary: const Color(0xffFDB71B),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                shape: const StadiumBorder(),
+              ),
+            ),
+            scaffoldBackgroundColor: const Color.fromARGB(255, 200, 224, 240),
+          ),
+          darkTheme: ThemeData.dark().copyWith(
+              colorScheme: ThemeData.dark()
+                  .colorScheme
+                  .copyWith(secondary: const Color(0xff00558F))),
           themeMode: settingsController.themeMode,
 
           // Define a function to handle named routes in order to support
@@ -71,11 +84,10 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
-                  case SampleItemDetailsView.routeName:
-                    return const SampleItemDetailsView();
-                  case SampleItemListView.routeName:
+
+                  case CounterView.routeName:
                   default:
-                    return const SampleItemListView();
+                    return const CounterView();
                 }
               },
             );
