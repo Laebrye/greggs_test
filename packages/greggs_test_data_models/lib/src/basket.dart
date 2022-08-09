@@ -11,6 +11,7 @@ class Basket with _$Basket {
     required String basketId,
     required DateTime lastUpdated,
     required Map<String, int> contents,
+    required bool eatingIn,
   }) = _Basket;
 
   factory Basket.fromJson(Map<String, dynamic> json) => _$BasketFromJson(json);

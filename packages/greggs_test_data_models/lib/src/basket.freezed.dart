@@ -23,6 +23,7 @@ mixin _$Basket {
   String get basketId => throw _privateConstructorUsedError;
   DateTime get lastUpdated => throw _privateConstructorUsedError;
   Map<String, int> get contents => throw _privateConstructorUsedError;
+  bool get eatingIn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +34,11 @@ mixin _$Basket {
 abstract class $BasketCopyWith<$Res> {
   factory $BasketCopyWith(Basket value, $Res Function(Basket) then) =
       _$BasketCopyWithImpl<$Res>;
-  $Res call({String basketId, DateTime lastUpdated, Map<String, int> contents});
+  $Res call(
+      {String basketId,
+      DateTime lastUpdated,
+      Map<String, int> contents,
+      bool eatingIn});
 }
 
 /// @nodoc
@@ -49,6 +54,7 @@ class _$BasketCopyWithImpl<$Res> implements $BasketCopyWith<$Res> {
     Object? basketId = freezed,
     Object? lastUpdated = freezed,
     Object? contents = freezed,
+    Object? eatingIn = freezed,
   }) {
     return _then(_value.copyWith(
       basketId: basketId == freezed
@@ -63,6 +69,10 @@ class _$BasketCopyWithImpl<$Res> implements $BasketCopyWith<$Res> {
           ? _value.contents
           : contents // ignore: cast_nullable_to_non_nullable
               as Map<String, int>,
+      eatingIn: eatingIn == freezed
+          ? _value.eatingIn
+          : eatingIn // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -72,7 +82,11 @@ abstract class _$$_BasketCopyWith<$Res> implements $BasketCopyWith<$Res> {
   factory _$$_BasketCopyWith(_$_Basket value, $Res Function(_$_Basket) then) =
       __$$_BasketCopyWithImpl<$Res>;
   @override
-  $Res call({String basketId, DateTime lastUpdated, Map<String, int> contents});
+  $Res call(
+      {String basketId,
+      DateTime lastUpdated,
+      Map<String, int> contents,
+      bool eatingIn});
 }
 
 /// @nodoc
@@ -89,6 +103,7 @@ class __$$_BasketCopyWithImpl<$Res> extends _$BasketCopyWithImpl<$Res>
     Object? basketId = freezed,
     Object? lastUpdated = freezed,
     Object? contents = freezed,
+    Object? eatingIn = freezed,
   }) {
     return _then(_$_Basket(
       basketId: basketId == freezed
@@ -103,6 +118,10 @@ class __$$_BasketCopyWithImpl<$Res> extends _$BasketCopyWithImpl<$Res>
           ? _value._contents
           : contents // ignore: cast_nullable_to_non_nullable
               as Map<String, int>,
+      eatingIn: eatingIn == freezed
+          ? _value.eatingIn
+          : eatingIn // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -113,7 +132,8 @@ class _$_Basket extends _Basket {
   _$_Basket(
       {required this.basketId,
       required this.lastUpdated,
-      required final Map<String, int> contents})
+      required final Map<String, int> contents,
+      required this.eatingIn})
       : _contents = contents,
         super._();
 
@@ -132,8 +152,11 @@ class _$_Basket extends _Basket {
   }
 
   @override
+  final bool eatingIn;
+
+  @override
   String toString() {
-    return 'Basket(basketId: $basketId, lastUpdated: $lastUpdated, contents: $contents)';
+    return 'Basket(basketId: $basketId, lastUpdated: $lastUpdated, contents: $contents, eatingIn: $eatingIn)';
   }
 
   @override
@@ -144,7 +167,8 @@ class _$_Basket extends _Basket {
             const DeepCollectionEquality().equals(other.basketId, basketId) &&
             const DeepCollectionEquality()
                 .equals(other.lastUpdated, lastUpdated) &&
-            const DeepCollectionEquality().equals(other._contents, _contents));
+            const DeepCollectionEquality().equals(other._contents, _contents) &&
+            const DeepCollectionEquality().equals(other.eatingIn, eatingIn));
   }
 
   @JsonKey(ignore: true)
@@ -153,7 +177,8 @@ class _$_Basket extends _Basket {
       runtimeType,
       const DeepCollectionEquality().hash(basketId),
       const DeepCollectionEquality().hash(lastUpdated),
-      const DeepCollectionEquality().hash(_contents));
+      const DeepCollectionEquality().hash(_contents),
+      const DeepCollectionEquality().hash(eatingIn));
 
   @JsonKey(ignore: true)
   @override
@@ -172,7 +197,8 @@ abstract class _Basket extends Basket {
   factory _Basket(
       {required final String basketId,
       required final DateTime lastUpdated,
-      required final Map<String, int> contents}) = _$_Basket;
+      required final Map<String, int> contents,
+      required final bool eatingIn}) = _$_Basket;
   _Basket._() : super._();
 
   factory _Basket.fromJson(Map<String, dynamic> json) = _$_Basket.fromJson;
@@ -183,6 +209,8 @@ abstract class _Basket extends Basket {
   DateTime get lastUpdated;
   @override
   Map<String, int> get contents;
+  @override
+  bool get eatingIn;
   @override
   @JsonKey(ignore: true)
   _$$_BasketCopyWith<_$_Basket> get copyWith =>

@@ -6,6 +6,7 @@ abstract class GreggsTestBaseBasketService {
   Future<void> addToBasket(GreggsTestProduct product);
   Future<void> removeFromBasket(GreggsTestProduct product);
   Stream<Basket> getBasketStream();
+  Future<void> changeEatingInPreference(bool newPreference);
   dispose();
 }
 
@@ -21,6 +22,7 @@ class GreggsTestBasketService implements GreggsTestBaseBasketService {
             basketId: '000001',
             contents: {},
             lastUpdated: DateTime.now(),
+            eatingIn: false,
           ));
 
   @override
@@ -43,5 +45,11 @@ class GreggsTestBasketService implements GreggsTestBaseBasketService {
   @override
   dispose() {
     basketSubject.close();
+  }
+
+  @override
+  Future<void> changeEatingInPreference(bool newPreference) async {
+    final updated = basketSubject.value.copyWith(eatingIn: newPreference);
+    basketSubject.add(updated);
   }
 }

@@ -37,9 +37,6 @@ class _CounterViewState extends State<CounterView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: Builder(builder: (context) {
-        return BasketSummary();
-      }),
       appBar: AppBar(
         title: const Text('Greggs Test'),
         actions: [
@@ -51,27 +48,34 @@ class _CounterViewState extends State<CounterView>
           ),
         ],
       ),
-      body: FutureBuilder<List<GreggsTestProduct>>(
-        future: getIt<GreggsTestBaseCatalogueService>().fetchCatalogue(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return ErrorWidget(snapshot.error ??
-                Exception(
-                  "Oops! Something wnet wrong",
-                ));
-          }
-          if (snapshot.data == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              return ProductCatalogueItem(product: snapshot.data![index]);
-            },
-            itemCount: snapshot.data!.length,
-          );
-        },
+      body: Column(
+        children: [
+          Expanded(
+            child: FutureBuilder<List<GreggsTestProduct>>(
+              future: getIt<GreggsTestBaseCatalogueService>().fetchCatalogue(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return ErrorWidget(snapshot.error ??
+                      Exception(
+                        "Oops! Something wnet wrong",
+                      ));
+                }
+                if (snapshot.data == null) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    return ProductCatalogueItem(product: snapshot.data![index]);
+                  },
+                  itemCount: snapshot.data!.length,
+                );
+              },
+            ),
+          ),
+          const BasketSummary(),
+        ],
       ),
     );
   }
