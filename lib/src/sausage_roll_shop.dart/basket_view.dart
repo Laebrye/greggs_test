@@ -1,14 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
 import 'package:greggs_test_basket_service/greggs_test_basket_service.dart';
 import 'package:greggs_test_data_models/greggs_test_data_models.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../main.dart';
 
 class BasketSummary extends StatelessWidget {
   const BasketSummary({
+    required this.products,
     Key? key,
   }) : super(key: key);
+
+  final List<GreggsTestProduct> products;
 
   @override
   Widget build(BuildContext context) {
@@ -34,22 +40,74 @@ class BasketSummary extends StatelessWidget {
             showMaterialModalBottomSheet(
               context: context,
               builder: ((context) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Eating in?'),
-                    Checkbox(
-                        value: false,
-                        onChanged: (value) =>
-                            getIt<GreggsTestBaseBasketService>()
-                                .changeEatingInPreference(value ?? false)),
-                    ListView.builder(
-                      itemCount: snapshot.data!.contents.length,
-                      itemBuilder: (context, index) =>
-                          const BasketLineItemView(),
-                    ),
-                  ],
-                );
+                return StreamBuilder<Basket>(
+                    stream:
+                        getIt<GreggsTestBaseBasketService>().getBasketStream(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return ErrorWidget(snapshot.error ??
+                            Exception('Oops - something went wrong'));
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting ||
+                          snapshot.data == null) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height - 200,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Eating in?',
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Checkbox(
+                                  value: snapshot.data?.eatingIn,
+                                  onChanged: (value) =>
+                                      getIt<GreggsTestBaseBasketService>()
+                                          .changeEatingInPreference(
+                                              value ?? false),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Total: £${snapshot.data!.getTotal(products).toStringAsFixed(2)}',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: snapshot.data!.contents.length,
+                                itemBuilder: (context, index) =>
+                                    BasketLineItemView(
+                                  product: products.firstWhereOrNull((prod) =>
+                                      prod.getArticleCode() ==
+                                      snapshot.data!.contents.keys
+                                          .toList()[index]),
+                                  quantity: snapshot.data!.contents.values
+                                      .toList()[index],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
               }),
             );
           },
@@ -117,10 +175,75 @@ class BasketSummary extends StatelessWidget {
 }
 
 class BasketLineItemView extends StatelessWidget {
-  const BasketLineItemView({Key? key}) : super(key: key);
+  const BasketLineItemView({
+    Key? key,
+    this.product,
+    required this.quantity,
+  }) : super(key: key);
+
+  final GreggsTestProduct? product;
+
+  final int quantity;
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    if (product == null) {
+      return Container();
+    }
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 6),
+          alignment: Alignment.topRight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    product!.getInternalDescription(),
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  CachedNetworkImage(
+                    imageUrl: product!.getThumbnailUri(),
+                    width: 60,
+                    height: 60,
+                    fit: BoxFit.contain,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                width: 4,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () => getIt<GreggsTestBaseBasketService>()
+                        .removeFromBasket(product!),
+                    icon: const Icon(Icons.remove),
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  Text(quantity.toString()),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  IconButton(
+                    onPressed: () => getIt<GreggsTestBaseBasketService>()
+                        .addToBasket(product!),
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

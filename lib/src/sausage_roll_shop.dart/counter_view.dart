@@ -48,35 +48,34 @@ class _CounterViewState extends State<CounterView>
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: FutureBuilder<List<GreggsTestProduct>>(
-              future: getIt<GreggsTestBaseCatalogueService>().fetchCatalogue(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return ErrorWidget(snapshot.error ??
-                      Exception(
-                        "Oops! Something wnet wrong",
-                      ));
-                }
-                if (snapshot.data == null) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return ListView.builder(
+      body: FutureBuilder<List<GreggsTestProduct>>(
+          future: getIt<GreggsTestBaseCatalogueService>().fetchCatalogue(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return ErrorWidget(snapshot.error ??
+                  Exception(
+                    "Oops! Something wnet wrong",
+                  ));
+            }
+            if (snapshot.data == null) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Column(children: [
+              Expanded(
+                child: ListView.builder(
                   itemBuilder: (context, index) {
                     return ProductCatalogueItem(product: snapshot.data![index]);
                   },
                   itemCount: snapshot.data!.length,
-                );
-              },
-            ),
-          ),
-          const BasketSummary(),
-        ],
-      ),
+                ),
+              ),
+              BasketSummary(
+                products: snapshot.data!,
+              ),
+            ]);
+          }),
     );
   }
 }

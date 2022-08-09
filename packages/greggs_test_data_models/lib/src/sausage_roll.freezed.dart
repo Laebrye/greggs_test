@@ -24,6 +24,7 @@ mixin _$SausageRoll {
   String get shopCode => throw _privateConstructorUsedError;
   DateTime get availableFrom => throw _privateConstructorUsedError;
   DateTime get availableUntil => throw _privateConstructorUsedError;
+  double get eatInPrice => throw _privateConstructorUsedError;
   double get eatOutPrice => throw _privateConstructorUsedError;
   String get articleName => throw _privateConstructorUsedError;
   List<String> get dayParts => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $SausageRollCopyWith<$Res> {
       String shopCode,
       DateTime availableFrom,
       DateTime availableUntil,
+      double eatInPrice,
       double eatOutPrice,
       String articleName,
       List<String> dayParts,
@@ -71,6 +73,7 @@ class _$SausageRollCopyWithImpl<$Res> implements $SausageRollCopyWith<$Res> {
     Object? shopCode = freezed,
     Object? availableFrom = freezed,
     Object? availableUntil = freezed,
+    Object? eatInPrice = freezed,
     Object? eatOutPrice = freezed,
     Object? articleName = freezed,
     Object? dayParts = freezed,
@@ -96,6 +99,10 @@ class _$SausageRollCopyWithImpl<$Res> implements $SausageRollCopyWith<$Res> {
           ? _value.availableUntil
           : availableUntil // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      eatInPrice: eatInPrice == freezed
+          ? _value.eatInPrice
+          : eatInPrice // ignore: cast_nullable_to_non_nullable
+              as double,
       eatOutPrice: eatOutPrice == freezed
           ? _value.eatOutPrice
           : eatOutPrice // ignore: cast_nullable_to_non_nullable
@@ -140,6 +147,7 @@ abstract class _$$_SausageRollCopyWith<$Res>
       String shopCode,
       DateTime availableFrom,
       DateTime availableUntil,
+      double eatInPrice,
       double eatOutPrice,
       String articleName,
       List<String> dayParts,
@@ -165,6 +173,7 @@ class __$$_SausageRollCopyWithImpl<$Res> extends _$SausageRollCopyWithImpl<$Res>
     Object? shopCode = freezed,
     Object? availableFrom = freezed,
     Object? availableUntil = freezed,
+    Object? eatInPrice = freezed,
     Object? eatOutPrice = freezed,
     Object? articleName = freezed,
     Object? dayParts = freezed,
@@ -190,6 +199,10 @@ class __$$_SausageRollCopyWithImpl<$Res> extends _$SausageRollCopyWithImpl<$Res>
           ? _value.availableUntil
           : availableUntil // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      eatInPrice: eatInPrice == freezed
+          ? _value.eatInPrice
+          : eatInPrice // ignore: cast_nullable_to_non_nullable
+              as double,
       eatOutPrice: eatOutPrice == freezed
           ? _value.eatOutPrice
           : eatOutPrice // ignore: cast_nullable_to_non_nullable
@@ -230,6 +243,7 @@ class _$_SausageRoll extends _SausageRoll {
       required this.shopCode,
       required this.availableFrom,
       required this.availableUntil,
+      required this.eatInPrice,
       required this.eatOutPrice,
       required this.articleName,
       required final List<String> dayParts,
@@ -252,6 +266,8 @@ class _$_SausageRoll extends _SausageRoll {
   @override
   final DateTime availableUntil;
   @override
+  final double eatInPrice;
+  @override
   final double eatOutPrice;
   @override
   final String articleName;
@@ -273,7 +289,7 @@ class _$_SausageRoll extends _SausageRoll {
 
   @override
   String toString() {
-    return 'SausageRoll(articleCode: $articleCode, shopCode: $shopCode, availableFrom: $availableFrom, availableUntil: $availableUntil, eatOutPrice: $eatOutPrice, articleName: $articleName, dayParts: $dayParts, internalDescription: $internalDescription, customerDescription: $customerDescription, imageUri: $imageUri, thumbnailUri: $thumbnailUri)';
+    return 'SausageRoll(articleCode: $articleCode, shopCode: $shopCode, availableFrom: $availableFrom, availableUntil: $availableUntil, eatInPrice: $eatInPrice, eatOutPrice: $eatOutPrice, articleName: $articleName, dayParts: $dayParts, internalDescription: $internalDescription, customerDescription: $customerDescription, imageUri: $imageUri, thumbnailUri: $thumbnailUri)';
   }
 
   @override
@@ -288,6 +304,8 @@ class _$_SausageRoll extends _SausageRoll {
                 .equals(other.availableFrom, availableFrom) &&
             const DeepCollectionEquality()
                 .equals(other.availableUntil, availableUntil) &&
+            const DeepCollectionEquality()
+                .equals(other.eatInPrice, eatInPrice) &&
             const DeepCollectionEquality()
                 .equals(other.eatOutPrice, eatOutPrice) &&
             const DeepCollectionEquality()
@@ -310,6 +328,7 @@ class _$_SausageRoll extends _SausageRoll {
       const DeepCollectionEquality().hash(shopCode),
       const DeepCollectionEquality().hash(availableFrom),
       const DeepCollectionEquality().hash(availableUntil),
+      const DeepCollectionEquality().hash(eatInPrice),
       const DeepCollectionEquality().hash(eatOutPrice),
       const DeepCollectionEquality().hash(articleName),
       const DeepCollectionEquality().hash(_dayParts),
@@ -337,6 +356,7 @@ abstract class _SausageRoll extends SausageRoll {
       required final String shopCode,
       required final DateTime availableFrom,
       required final DateTime availableUntil,
+      required final double eatInPrice,
       required final double eatOutPrice,
       required final String articleName,
       required final List<String> dayParts,
@@ -357,6 +377,8 @@ abstract class _SausageRoll extends SausageRoll {
   DateTime get availableFrom;
   @override
   DateTime get availableUntil;
+  @override
+  double get eatInPrice;
   @override
   double get eatOutPrice;
   @override

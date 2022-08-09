@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:greggs_test_data_models/greggs_test_data_models.dart';
+import 'package:collection/collection.dart';
 
 part 'basket.g.dart';
 part 'basket.freezed.dart';
@@ -35,5 +36,18 @@ class Basket with _$Basket {
     Map<String, int> updatedContents = Map<String, int>.from(contents);
     updatedContents[code] = (updatedContents[code] ?? 0) + 1;
     return copyWith(contents: updatedContents);
+  }
+
+  double getTotal(List<GreggsTestProduct> productList) {
+    double total = 0;
+    for (MapEntry<String, int> entry in contents.entries) {
+      final product = productList
+          .firstWhereOrNull((element) => element.getArticleCode() == entry.key);
+      if (product == null) continue;
+      final productPrice = product.getPrice(eatingIn);
+      final totalLineItemPrice = productPrice * entry.value;
+      total += totalLineItemPrice;
+    }
+    return total;
   }
 }

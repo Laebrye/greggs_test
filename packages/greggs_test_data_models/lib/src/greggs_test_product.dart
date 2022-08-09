@@ -6,4 +6,6 @@ abstract class GreggsTestProduct {
   String getThumbnailUri();
 
   String getImageUri();
+
+  double getPrice(bool eatingIn);
 }

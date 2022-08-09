@@ -14,6 +14,7 @@ class SausageRoll with _$SausageRoll implements GreggsTestProduct {
     required String shopCode,
     required DateTime availableFrom,
     required DateTime availableUntil,
+    required double eatInPrice,
     required double eatOutPrice,
     required String articleName,
     required List<String> dayParts,
@@ -37,4 +38,9 @@ class SausageRoll with _$SausageRoll implements GreggsTestProduct {
 
   @override
   String getThumbnailUri() => thumbnailUri;
+
+  @override
+  double getPrice(bool eatingIn) {
+    return eatingIn ? eatInPrice : eatOutPrice;
+  }
 }
